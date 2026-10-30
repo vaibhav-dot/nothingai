@@ -1,0 +1,1490 @@
+@font-face {
+  font-family: 'Ndot 57';
+  src: url('Ndot-57.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NType82 Headline';
+  src: url('NType82 Headline.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NType82 Regular';
+  src: url('NType82 Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --accent: #D71921;
+  --ndot: 'Ndot 57', 'SF Mono', monospace;
+  --ntype-h: 'NType82 Headline', Georgia, serif;
+  --ntype-r: 'NType82 Regular', Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --phone-w: 375px;
+  --phone-h: 812px;
+  --bg: #F4F3ED;
+  --card-bg: #F8F8F8;
+  --card-border: rgba(0,0,0,0.06);
+  --text-1: #1A1A1A;
+  --text-2: #555555;
+  --text-3: #999999;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 16px; }
+body {
+  font-family: var(--sans);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #E8E6E3;
+  -webkit-font-smoothing: antialiased;
+}
+
+.stage { display: flex; flex-direction: column; align-items: center; }
+.phone { flex-shrink: 0; }
+.phone-bezel {
+  width: calc(var(--phone-w) + 16px);
+  height: calc(var(--phone-h) + 16px);
+  background: #1A1A1A;
+  border-radius: 48px;
+  padding: 8px;
+  position: relative;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 30px 80px rgba(0,0,0,0.15);
+}
+.phone-notch {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 26px;
+  background: #000;
+  border-radius: 0 0 16px 16px;
+  z-index: 100;
+}
+.phone-screen {
+  width: var(--phone-w);
+  height: var(--phone-h);
+  background: var(--bg);
+  border-radius: 40px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ======= FRAMES ======= */
+.frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  background: var(--bg);
+}
+.frame::-webkit-scrollbar { display: none; }
+.frame.active { opacity: 1; pointer-events: auto; }
+
+/* Generic horizontal slide between any two frames — gentle 800ms */
+.phone-screen.swipe-in-progress {
+  overflow: hidden;
+}
+.phone-screen.swipe-in-progress .frame.sliding-out,
+.phone-screen.swipe-in-progress .frame.sliding-in,
+.phone-screen.swipe-in-progress .frame.active {
+  opacity: 1;
+  pointer-events: none;
+  will-change: transform;
+  transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.phone-screen.swipe-in-progress .frame.sliding-out {
+  transform: translateX(var(--slide-out, -100%));
+  z-index: 0;
+}
+.phone-screen.swipe-in-progress .frame.active:not(.sliding-out):not(.sliding-in) {
+  transform: translateX(var(--slide-start, 100%));
+  z-index: 1;
+}
+.phone-screen.swipe-in-progress .frame.sliding-in {
+  transform: translateX(0);
+  z-index: 1;
+}
+
+/* ======= STATUS BAR ======= */
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px 10px;
+  font-family: var(--ntype-r);
+  font-size: 0.9rem;
+  font-weight: normal;
+  color: var(--text-1);
+  flex-shrink: 0;
+}
+.sb-icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sb-signal::before { content: ''; display: inline-block; width: 18px; height: 12px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231A1A1A'%3E%3Cpath d='M1 9h2v14H1V9zm4 4h2v10H5V13zm4-4h2v14H9V9zm4 4h2v10h-2V13zm4-8h2v18h-2V9z'/%3E%3C/svg%3E") center/contain no-repeat; }
+.sb-wifi::before { content: ''; display: inline-block; width: 18px; height: 14px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231A1A1A'%3E%3Cpath d='M1 9.98l2 2c2.76-2.76 6.24-2.76 9 0l2-2C11.31 5.69 6.69 5.69 1 9.98zm8 8.02l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c1.31-1.31 3.39-1.31 4.7 0l2-2C12.85 10.15 9.15 10.15 6 13.01z'/%3E%3C/svg%3E") center/contain no-repeat; }
+.sb-battery::before { content: ''; display: inline-block; width: 24px; height: 12px; border: 1.5px solid var(--text-1); border-radius: 2px; background: linear-gradient(90deg, var(--text-1) 0%, var(--text-1) 85%, transparent 85%); background-size: 100% 100%; }
+
+/* ======= FRAME 1: LOCK ======= */
+#frame-lock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 52px 24px 44px;
+}
+.lock-date {
+  font-family: var(--ntype-r);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-top: 8px;
+}
+.lock-time-ndot {
+  font-family: var(--ndot);
+  font-size: 4.2rem;
+  letter-spacing: 0.02em;
+  color: var(--text-1);
+  line-height: 1;
+  margin: 12px 0;
+  display: flex;
+  align-items: baseline;
+}
+.lock-time-ndot .ndot-sep { margin: 0 2px; }
+.lock-batteries {
+  display: flex;
+  gap: 24px;
+  font-family: var(--ntype-r);
+  font-size: 0.7rem;
+  color: var(--text-3);
+  letter-spacing: 0.02em;
+  margin-bottom: 24px;
+}
+.lb-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.lb-dot.green { background: #4CAF50; }
+.lock-dots {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 140px;
+  width: 100%;
+}
+.lock-dots-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--text-3) 1px, transparent 1px);
+  background-size: 12px 12px;
+  opacity: 0.15;
+}
+.lock-dots-yellow {
+  position: relative;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  background-image:
+    radial-gradient(circle at 50% 50%, #FFD54F 2.5px, transparent 2.5px),
+    radial-gradient(circle at 50% 0%, #FFD54F 2.5px, transparent 2.5px),
+    radial-gradient(circle at 50% 100%, #FFD54F 2.5px, transparent 2.5px),
+    radial-gradient(circle at 0% 50%, #FFD54F 2.5px, transparent 2.5px),
+    radial-gradient(circle at 100% 50%, #FFD54F 2.5px, transparent 2.5px),
+    radial-gradient(circle at 0% 0%, #FFD54F 2.5px, transparent 2.5px),
+    radial-gradient(circle at 100% 0%, #FFD54F 2.5px, transparent 2.5px),
+    radial-gradient(circle at 0% 100%, #FFD54F 2.5px, transparent 2.5px),
+    radial-gradient(circle at 100% 100%, #FFD54F 2.5px, transparent 2.5px);
+  background-size: 8px 8px, 8px 8px, 8px 8px, 8px 8px, 8px 8px, 8px 8px, 8px 8px, 8px 8px, 8px 8px;
+  background-position: center, center top, center bottom, left center, right center, top left, top right, bottom left, bottom right;
+  background-repeat: no-repeat;
+}
+.lock-tap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+.lock-tap-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #E57373;
+  box-shadow: 0 0 0 4px rgba(229,115,115,0.3);
+  animation: tapPulse 2s ease-in-out infinite;
+}
+@keyframes tapPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(229,115,115,0.3); }
+  50% { box-shadow: 0 0 0 10px rgba(229,115,115,0.1); }
+}
+.lock-tap-label {
+  font-family: var(--ntype-r);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--text-3);
+  text-transform: lowercase;
+}
+
+/* ======= SHARED ======= */
+.ctx-scroll { padding: 0 20px 100px; display: flex; flex-direction: column; gap: 14px; }
+.pill-row { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+.pill-btn { cursor: pointer; border: 1px solid var(--text-3); }
+.pill-btn:hover { border-color: var(--text-1); }
+
+/* ======= FRAME 2 (12:115): GOOD MORNING — exact Figma layout ======= */
+#frame-morning { overflow: hidden; }
+.f2-status {
+  position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+  width: 360px; height: 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 12px;
+}
+.f2-time {
+  font-family: 'Roboto', var(--sans); font-weight: 500;
+  font-size: 14px; color: #1a1d1c; letter-spacing: 0.014px;
+}
+.f2-status-icons { display: flex; gap: 6px; align-items: center; }
+.f2-sb-ico { display: block; }
+
+.f2-heading {
+  position: absolute; top: 75px; left: calc(50% - 150px);
+  width: 326px; font-size: 30px; letter-spacing: 0.03px;
+  line-height: 1.01;
+}
+.f2-h1 {
+  font-family: var(--ntype-h); color: #000; margin: 0 0 4px;
+  font-size: 30px; line-height: 1.01;
+}
+.f2-h2 {
+  font-family: var(--ntype-h); color: #000; margin: 0;
+  font-size: 30px; line-height: 1.01;
+}
+.f2-muted { color: #979797; }
+.f2-dark { color: #1a1d1c; }
+
+/* ===== Bento: Schedule Card (83:1351) — 158×233 ===== */
+.b-schedule {
+  position: absolute; top: 224px; left: 19px;
+  width: 158px; height: 233px;
+}
+.b-schedule-bg {
+  position: absolute; inset: 0;
+  background: #D2D6DB; border-radius: 30px;
+}
+.b-schedule-time {
+  position: absolute; top: 16px; left: 14px;
+  font-family: var(--ntype-h); font-size: 32px;
+  color: #1c1d1f; letter-spacing: 0.032px; line-height: 1.213;
+  margin: 0; z-index: 1;
+}
+.b-schedule-label {
+  position: absolute; top: 55px; left: 14px;
+  font-family: var(--ndot); font-size: 16px;
+  color: #5b5b5b; letter-spacing: 0.016px; line-height: 1.213;
+  margin: 0; z-index: 1;
+}
+.b-schedule-nhs {
+  position: absolute; left: 17px; top: 176px;
+  width: 34px; height: 34px;
+  object-fit: cover; z-index: 1;
+}
+.b-schedule-health {
+  position: absolute; left: 35px; top: 168px;
+  width: 46px; height: 46px;
+  object-fit: cover; z-index: 2;
+  border-radius: 50%;
+}
+
+/* ===== Bento: Breakfast Card (83:1361) — 158×220 ===== */
+.b-breakfast {
+  position: absolute; top: 224px; left: 184px;
+  width: 158px; height: 220px;
+}
+.b-breakfast-bg {
+  position: absolute; top: 0; left: 0;
+  width: 158px; height: 233px;
+  background: #D2D6DB; border-radius: 30px;
+}
+.b-breakfast-title {
+  position: absolute; top: 20px; left: 14px;
+  font-family: var(--ntype-h); font-size: 24px;
+  color: #1c1d1f; letter-spacing: 0.024px; line-height: 1.213;
+  z-index: 1; white-space: nowrap;
+}
+.b-breakfast-list {
+  position: absolute; top: 92px; left: 14px;
+  width: 132px;
+  font-family: var(--ndot); font-size: 14px;
+  color: #5b5b5b; letter-spacing: 0.014px; line-height: 1.213;
+  z-index: 1;
+}
+.b-breakfast-list ul { margin: 0; padding: 0 0 0 21px; list-style-type: square; }
+.b-breakfast-list li { margin-bottom: 2px; }
+.b-breakfast-meta { margin-top: 10px; white-space: pre; }
+.b-breakfast-btnbg {
+  position: absolute; left: 14px; top: 184px;
+  width: 132px; height: 34px;
+  background: #1b1d1f; border-radius: 20px;
+  z-index: 1;
+}
+.b-breakfast-btntext {
+  position: absolute; left: 24px; top: 190px;
+  font-family: var(--ntype-h); font-size: 14px;
+  color: #e7eae9; letter-spacing: 0.014px; line-height: 1.213;
+  z-index: 2; margin: 0;
+}
+
+/* ===== Bento: Work Commute Card (83:1335) — 322×220 ===== */
+.b-commute {
+  position: absolute; top: 464px; left: 20px;
+  width: 322px; height: 220px;
+  cursor: pointer;
+}
+.b-commute-bg {
+  position: absolute; inset: 0;
+  background: #D2D6DB; border-radius: 30px;
+}
+.b-commute-title {
+  position: absolute;
+  top: 5.45%; left: 4.35%;
+  font-family: var(--ntype-h); font-size: 32px;
+  color: #1c1d1f; letter-spacing: 0.032px; line-height: 1.213;
+  margin: 0; z-index: 2;
+}
+
+/* Map layer 1 (route image, mix-blend-multiply — left side behind timeline) */
+.b-commute-mask1 {
+  position: absolute;
+  top: 0; left: 9px;
+  width: 128px; height: 100%;
+  mix-blend-mode: multiply;
+  overflow: hidden; z-index: 1;
+  border-radius: 20px;
+  opacity: 0;
+  pointer-events: none;
+}
+.b-commute-mapimg1 {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+
+/* Map layer 2 (main street map — right side) */
+.b-commute-mask2 {
+  position: absolute;
+  top: 58px; left: 125px; right: 12px;
+  height: 101px;
+  overflow: hidden; z-index: 1;
+  border-radius: 12px;
+}
+.b-commute-mapimg2 {
+  position: absolute;
+  top: -119%; left: 0;
+  width: 100%; height: 361%;
+  object-fit: cover;
+}
+
+/* Timeline */
+.b-commute-tl {
+  position: absolute; top: 62px; left: 14px;
+  width: 130px; z-index: 2;
+  display: flex; flex-direction: column;
+}
+.b-tl-row {
+  display: flex; align-items: flex-start; gap: 6px;
+}
+.b-tl-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #1a1d1c; flex-shrink: 0;
+  margin-top: 4px;
+}
+.b-tl-dot-big {
+  width: 8px; height: 8px; margin-top: 3px;
+}
+.b-tl-line {
+  width: 1px; height: 8px;
+  background: #1a1d1c; margin-left: 3px;
+}
+.b-tl-text { display: flex; flex-wrap: wrap; gap: 0 3px; }
+.b-tl-time {
+  font-family: var(--ntype-r); font-size: 10px;
+  color: #5b5b5b; line-height: 1.4;
+}
+.b-tl-place {
+  font-family: var(--ntype-h); font-size: 10px;
+  color: #1a1d1c; line-height: 1.4;
+}
+.b-tl-bold { font-family: var(--ntype-h); color: #1a1d1c; }
+.b-tl-sub {
+  display: block; width: 100%;
+  font-family: var(--ntype-r); font-size: 8px;
+  color: #5b5b5b; line-height: 1.3;
+}
+.b-tl-badge {
+  display: inline-block;
+  background: #1976D2; color: #fff;
+  font-family: var(--ntype-h); font-size: 7px;
+  padding: 1px 4px; border-radius: 3px;
+  letter-spacing: 0.02em;
+}
+.b-tl-hide {
+  font-family: var(--ntype-r); font-size: 8px;
+  color: #979797; margin-left: 12px;
+  cursor: pointer;
+}
+
+/* Commute bottom row */
+.b-commute-foot {
+  position: absolute; bottom: 10px; left: 14px; right: 14px;
+  display: flex; align-items: center; justify-content: space-between;
+  z-index: 2;
+}
+.b-commute-apps {
+  display: flex; align-items: center;
+}
+.b-commute-apps img {
+  display: block; object-fit: cover;
+  border-radius: 50%;
+  margin-left: -8px;
+  position: relative;
+  border: 2px solid #D2D6DB;
+}
+.b-commute-apps img:first-child { margin-left: 0; }
+.b-commute-action {
+  display: flex; align-items: center; gap: 4px;
+}
+.b-commute-actionlabel {
+  font-family: var(--ndot); font-size: 14px;
+  color: #5b5b5b; letter-spacing: 0.014px; line-height: 1.213;
+}
+
+
+/* Nav Bar (Figma exact) */
+.f2-navbar {
+  position: absolute; bottom: 24px; left: 0; right: 0;
+  height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 36px;
+}
+.f2-nav-left, .f2-nav-center, .f2-nav-right {
+  position: relative; cursor: pointer;
+  flex-shrink: 0;
+}
+.f2-nav-left { width: 50px; height: 50px; }
+.f2-nav-center { width: 58px; height: 58px; }
+.f2-nav-right { width: 50px; height: 50px; }
+.f2-nav-circle { position: absolute; inset: 0; width: 100%; height: 100%; }
+.f2-nav-inner-icon {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+}
+.f2-nav-ring {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+}
+.f2-nav-dot {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+}
+
+/* ======= BOTTOM NAV ======= */
+.bottom-nav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  background: rgba(248,248,248,0.95);
+  border-top: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.bn-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: transform 0.15s;
+}
+.bn-btn:active { transform: scale(0.95); }
+.bn-camera {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--text-1);
+  position: relative;
+}
+.bn-camera::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.bn-main {
+  width: 56px;
+  height: 56px;
+  background: var(--accent);
+  box-shadow: 0 2px 12px rgba(215,25,33,0.4);
+}
+.bn-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+}
+.bn-tape {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--text-1);
+  position: relative;
+}
+.bn-tape::before, .bn-tape::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.bn-tape::before { left: 3px; }
+.bn-tape::after { right: 3px; }
+
+/* ======= FRAME 3 (77:97): COMMUTE DETAIL — centered, margins, flashing dots ======= */
+.f3 {
+  overflow: hidden;
+  position: relative;
+  --f3-w: 322px;
+  --f3-margin: 14px;
+}
+
+/* Status bar: same width as grey box, time & icons within margins */
+.f3-status {
+  position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+  width: var(--f3-w, 322px); height: 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 var(--f3-margin, 14px);
+  box-sizing: border-box;
+}
+.f3-time {
+  font-family: 'Roboto', var(--sans); font-weight: 500;
+  font-size: 14px; color: #1a1d1c; letter-spacing: 0.014px;
+}
+.f3-status-icons { display: flex; gap: 6px; align-items: center; }
+.f3-status-icons img { display: block; }
+
+/* Main grey card — centered; expands from small card when frame becomes active */
+.f3-card-main {
+  position: absolute; left: 50%;
+  transform: translateX(-50%);
+  width: 322px;
+  background: #D2D6DB; border-radius: 30px;
+  /* Start at "small card" state so expand animation runs from that */
+  top: 464px;
+  height: 220px;
+}
+.f3.active .f3-card-main {
+  animation: f3-card-expand 0.5s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+@keyframes f3-card-expand {
+  from {
+    top: 464px;
+    height: 220px;
+  }
+  to {
+    top: 64px;
+    height: 398px;
+  }
+}
+
+/* Content fades in after card starts expanding */
+.f3 .f3-title,
+.f3 .f3-time-range,
+.f3 .f3-progress-track,
+.f3 .f3-action,
+.f3 .f3-action-text,
+.f3 .f3-dots,
+.f3 .f3-reminders-card,
+.f3 .f3-taxi-shadow1,
+.f3 .f3-taxi-shadow2,
+.f3 .f3-taxi-shadow3,
+.f3 .f3-taxi-text,
+.f3 .f3-taxi-apps {
+  opacity: 0;
+}
+.f3.active .f3-title,
+.f3.active .f3-time-range,
+.f3.active .f3-progress-track,
+.f3.active .f3-action,
+.f3.active .f3-action-text,
+.f3.active .f3-dots,
+.f3.active .f3-reminders-card,
+.f3.active .f3-taxi-shadow1,
+.f3.active .f3-taxi-shadow2,
+.f3.active .f3-taxi-shadow3,
+.f3.active .f3-taxi-text,
+.f3.active .f3-taxi-apps {
+  animation: f3-content-in 0.35s ease-out 0.2s forwards;
+}
+@keyframes f3-content-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Title — within grey box margins (14px from card edge) */
+.f3-title {
+  position: absolute; top: 75px; left: calc(50% - 161px + 14px);
+  font-family: var(--ntype-h); font-size: 32px;
+  color: #1c1d1f; letter-spacing: 0.032px; line-height: 1.213;
+  margin: 0; z-index: 1;
+}
+/* Time range — within grey box margins */
+.f3-time-range {
+  position: absolute; top: 94px; right: calc(50% - 161px + 14px);
+  left: auto;
+  font-family: var(--ndot); font-size: 14px;
+  color: #5b5b5b; letter-spacing: 0.014px; line-height: 1.213;
+  margin: 0; z-index: 1;
+}
+
+/* Progress bar — within grey box */
+.f3-progress-track {
+  position: absolute; top: 124px; left: calc(50% - 161px + 14px);
+  width: 295px; height: 44px;
+  background: #F5F5F5; border-radius: 30px;
+  z-index: 1;
+}
+.f3-progress-fill {
+  position: absolute; top: 3px; left: 4px;
+  width: 87px; height: 38px;
+  background: #C8102E; border-radius: 20px;
+}
+
+/* Action items — within grey box, two columns */
+.f3-action {
+  position: absolute; z-index: 1;
+}
+.f3-action.f3-action-dot {
+  left: calc(50% - 161px + 14px);
+}
+.f3-action.f3-action-dot.f3-action-col2 {
+  left: calc(50% - 161px + 161px + 14px);
+}
+.f3-action img { display: block; }
+.f3-action-text {
+  position: absolute; z-index: 1;
+  font-family: var(--ntype-r); font-size: 14px;
+  color: #1c1d1f; letter-spacing: 0.014px; line-height: 1.213;
+  margin: 0; white-space: nowrap;
+}
+.f3-action-text:not(.f3-action-col2) { left: calc(50% - 161px + 14px + 23px); }
+.f3-action-text.f3-action-col2 { left: calc(50% - 161px + 161px + 14px + 23px); }
+
+/* Progress dots row — rightmost dot extends to white box right margin (13.5 + 295 = 308.5px from card left) */
+.f3-dots {
+  position: absolute; top: 258px; left: calc(50% - 161px + 14px);
+  /* Match white box right: container ends at 308.5px from card left, so width = 308.5 - 14 = 294.5 */
+  width: 294.5px;
+  display: flex; align-items: center; gap: 3px;
+  z-index: 1;
+  overflow: hidden;
+  /* Scale so row width = 294.5px (294.5/421) so rightmost dot sits on the right margin */
+  transform: scale(0.6994);
+  transform-origin: left center;
+}
+.f3-dot-big { flex-shrink: 0; }
+.f3-dot-sm { flex-shrink: 0; }
+@keyframes f3-dot-flash {
+  0%, 8% { opacity: 1; }
+  4% { opacity: 0.35; }
+  100% { opacity: 1; }
+}
+.f3-dots img {
+  animation: f3-dot-flash 2.24s ease-in-out infinite;
+}
+.f3-dots img:nth-child(1) { animation-delay: 0s; }
+.f3-dots img:nth-child(2) { animation-delay: 0.08s; }
+.f3-dots img:nth-child(3) { animation-delay: 0.16s; }
+.f3-dots img:nth-child(4) { animation-delay: 0.24s; }
+.f3-dots img:nth-child(5) { animation-delay: 0.32s; }
+.f3-dots img:nth-child(6) { animation-delay: 0.4s; }
+.f3-dots img:nth-child(7) { animation-delay: 0.48s; }
+.f3-dots img:nth-child(8) { animation-delay: 0.56s; }
+.f3-dots img:nth-child(9) { animation-delay: 0.64s; }
+.f3-dots img:nth-child(10) { animation-delay: 0.72s; }
+.f3-dots img:nth-child(11) { animation-delay: 0.8s; }
+.f3-dots img:nth-child(12) { animation-delay: 0.88s; }
+.f3-dots img:nth-child(13) { animation-delay: 0.96s; }
+.f3-dots img:nth-child(14) { animation-delay: 1.04s; }
+.f3-dots img:nth-child(15) { animation-delay: 1.12s; }
+.f3-dots img:nth-child(16) { animation-delay: 1.2s; }
+.f3-dots img:nth-child(17) { animation-delay: 1.28s; }
+.f3-dots img:nth-child(18) { animation-delay: 1.36s; }
+.f3-dots img:nth-child(19) { animation-delay: 1.44s; }
+.f3-dots img:nth-child(20) { animation-delay: 1.52s; }
+.f3-dots img:nth-child(21) { animation-delay: 1.6s; }
+.f3-dots img:nth-child(22) { animation-delay: 1.68s; }
+.f3-dots img:nth-child(23) { animation-delay: 1.76s; }
+.f3-dots img:nth-child(24) { animation-delay: 1.84s; }
+.f3-dots img:nth-child(25) { animation-delay: 1.92s; }
+.f3-dots img:nth-child(26) { animation-delay: 2s; }
+.f3-dots img:nth-child(27) { animation-delay: 2.08s; }
+.f3-dots img:nth-child(28) { animation-delay: 2.16s; }
+
+/* Reminders card — centered, within column */
+.f3-reminders-card {
+  position: absolute; top: 296px; left: calc(50% - 161px + 13.5px);
+  width: 295px; height: 153px;
+  background: #F5F5F5; border-radius: 20px;
+  z-index: 1;
+}
+.f3-reminders-badge {
+  position: absolute; top: 16px; left: 13px;
+  width: 89px; height: 27px;
+  background: #C8102E; border-radius: 30px;
+  font-family: var(--ndot); font-size: 14px;
+  color: #fff; letter-spacing: 0.014px; line-height: 27px;
+  text-align: center;
+}
+.f3-reminders-text {
+  position: absolute; top: 51px; left: 13px;
+  width: 276px;
+  font-family: var(--ntype-h); font-size: 32px;
+  color: #1c1d1f; letter-spacing: 0.032px; line-height: 1.213;
+  margin: 0;
+}
+
+/* Taxi card stack shadows — centered */
+.f3-taxi-shadow3 {
+  position: absolute; top: 512px; left: calc(50% - 161px + 31px);
+  width: 257px; height: 189px;
+  background: rgba(217,217,217,0.6); border-radius: 30px;
+}
+.f3-taxi-shadow2 {
+  position: absolute; top: 489px; left: calc(50% - 161px + 9px);
+  width: 304px; height: 189px;
+  background: rgba(217,217,217,0.6); border-radius: 30px;
+}
+.f3-taxi-shadow1 {
+  position: absolute; top: 489px; left: calc(50% - 161px);
+  width: 322px; height: 171px;
+  background: #D9D9D9; border-radius: 30px;
+}
+
+/* Taxi question text — within grey box margins */
+.f3-taxi-text {
+  position: absolute; top: 506px; left: calc(50% - 161px + 27px);
+  width: 276px;
+  font-family: var(--ntype-r); font-size: 32px;
+  color: #1c1d1f; letter-spacing: 0.032px; line-height: 1.213;
+  margin: 0; z-index: 1;
+}
+
+/* Taxi app icons — within grey box */
+.f3-taxi-apps {
+  position: absolute; top: 605px; left: calc(50% - 161px + 27px);
+  display: flex; align-items: center;
+  z-index: 1;
+}
+.f3-taxi-icon {
+  width: 35px; height: 35px;
+  border-radius: 60px;
+  object-fit: cover;
+  margin-right: -18px;
+}
+.f3-taxi-icon:last-child { margin-right: 0; }
+
+/* ======= FRAME 4 (12:204): TASKS — Figma exact, same margins as Frame 2 ======= */
+.f4 { overflow: hidden; }
+.f4-status {
+  width: 322px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0 14px;
+  box-sizing: border-box;
+}
+.f4-scroll {
+  padding: 48px 26.5px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 0;
+}
+.f4-scroll .hero-title-sm,
+.f4-scroll .cluster,
+.f4-scroll .cluster-label,
+.f4-scroll .card-task,
+.f4-scroll .ai-filter {
+  max-width: 322px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.hero-title-sm {
+  font-family: var(--ntype-r);
+  font-size: 1.5rem;
+  font-weight: normal;
+  line-height: 1.35;
+  color: var(--text-2);
+  margin-bottom: 16px;
+}
+.hero-title-sm strong { font-family: var(--ntype-h); color: var(--text-1); font-weight: normal; }
+.cluster { margin-bottom: 16px; }
+.cluster-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--ntype-r);
+  font-size: 0.75rem;
+  color: var(--text-2);
+  margin-bottom: 8px;
+}
+.tag-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-3);
+}
+.tag-dot.red { background: var(--accent); }
+.card-task {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  cursor: default;
+}
+.task-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+  background: var(--text-3);
+}
+.task-dot.red { background: var(--accent); }
+.task-body { flex: 1; min-width: 0; }
+.task-body strong { font-family: var(--ntype-h); font-size: 0.95rem; font-weight: normal; color: var(--text-1); }
+.task-body p { font-family: var(--ntype-r); font-size: 0.8rem; color: var(--text-2); margin: 4px 0 8px; }
+.task-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.btn-ghost {
+  font-family: var(--ntype-r);
+  background: var(--bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 0.72rem;
+  color: var(--text-2);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.ico-link { display: inline-block; width: 14px; height: 14px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2'%3E%3Cpath d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'/%3E%3Cpath d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'/%3E%3C/svg%3E") center/contain no-repeat; }
+.task-time { font-family: var(--ntype-h); font-size: 0.85rem; font-weight: normal; color: var(--text-1); flex-shrink: 0; }
+.task-avatars { font-family: var(--ntype-r); font-size: 0.75rem; color: var(--text-3); margin: 4px 0 8px; }
+.card-task-sm .task-body p { margin-bottom: 0; }
+.ai-filter {
+  font-family: var(--ntype-r);
+  font-size: 0.75rem;
+  color: var(--text-3);
+  margin-top: 8px;
+}
+.ai-filter .cam { color: var(--text-2); }
+.ai-filter .review { color: var(--accent); font-weight: 600; }
+
+/* ======= TASK-LIST CARDS (tl-*) — exact Figma 83:1080 / 83:1063 ======= */
+.tl-card {
+  position: relative;
+  width: 312px;
+  height: 145px;
+  margin-bottom: 12px;
+}
+.tl-card-sm { height: 78px; }
+
+.tl-bg-bottom {
+  position: absolute;
+  top: 61px; left: 0; right: 0; bottom: 0;
+  background: rgba(210,214,219,0.2);
+  border-radius: 10px;
+}
+.tl-bg-bottom-v2 {
+  top: 61px; height: 84px; bottom: auto;
+}
+.tl-bg-top {
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 78px;
+  background: #F5F5F5;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+}
+.tl-bg-top-sm { height: 78px; box-shadow: 0 4px 4px rgba(0,0,0,0.25); }
+
+.tl-dot {
+  position: absolute;
+  left: 18px; top: 21px;
+  width: 19px; height: 19px;
+  z-index: 1;
+}
+.tl-name {
+  position: absolute;
+  left: 44px; top: 16px;
+  font-family: var(--ntype-r);
+  font-size: 20px;
+  color: #1c1d1f;
+  letter-spacing: 0.02px;
+  line-height: 1.213;
+  margin: 0; z-index: 1;
+}
+.tl-time {
+  position: absolute;
+  right: 30px; top: 16px;
+  font-family: var(--ntype-r);
+  font-size: 20px;
+  color: #1c1d1f;
+  letter-spacing: 0.02px;
+  line-height: 1.213;
+  margin: 0; z-index: 1;
+}
+.tl-desc {
+  position: absolute;
+  left: 44px; top: 44px;
+  font-family: var(--ndot);
+  font-size: 14px;
+  color: #5b5b5b;
+  letter-spacing: 0.014px;
+  line-height: 1.213;
+  margin: 0; z-index: 1;
+  white-space: pre-wrap;
+}
+
+/* Grey "Files" pill */
+.tl-btn-grey {
+  position: absolute;
+  top: 92px; left: 18px;
+  width: 81px; height: 34px;
+  background: #D2D6DB;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  z-index: 1;
+}
+.tl-link-ico {
+  width: 18px; height: 19px;
+  object-fit: contain;
+}
+.tl-btn-grey-text {
+  font-family: var(--ntype-h);
+  font-size: 14px;
+  color: #1a1d1c;
+  letter-spacing: 0.014px;
+  line-height: 1.213;
+}
+
+/* Dark action button */
+.tl-btn-dark {
+  position: absolute;
+  top: 92px; left: 184px;
+  width: 116px; height: 34px;
+  background: #1B1D1F;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.tl-btn-dark-v2 {
+  left: 184px;
+}
+.tl-btn-dark-text {
+  font-family: var(--ntype-h);
+  font-size: 14px;
+  color: #E7EAE9;
+  letter-spacing: 0.014px;
+  line-height: 1.213;
+}
+
+/* Avatars row (Team Standup) */
+.tl-avatars {
+  position: absolute;
+  top: 92px; left: 18px;
+  display: flex;
+  align-items: center;
+  padding-right: 15px;
+  z-index: 1;
+}
+.tl-av {
+  width: 37px; height: 37px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: -15px;
+  position: relative;
+}
+.tl-av:nth-child(1) { z-index: 3; }
+.tl-av:nth-child(2) { z-index: 2; }
+.tl-av:nth-child(3) { z-index: 1; }
+.tl-av-more {
+  font-family: var(--ntype-h);
+  font-size: 14px;
+  color: #000;
+  letter-spacing: 0.014px;
+  line-height: 1.213;
+  margin-left: 20px;
+}
+
+/* ======= FRAME 5 (72:5225): Nothing Agent WORK — exact Figma (360×834) ======= */
+/* Figma frame = 360px. Phone = 375px. Center offset = (375-360)/2 = 7.5px */
+.f5 { overflow: hidden; --f5-off: calc(50% - 180px); }
+.f5-status {
+  width: 360px;
+  left: 50%; transform: translateX(-50%);
+  padding: 0 12px; box-sizing: border-box;
+}
+
+/* Heading — Figma: x=30 y=75 w=314 */
+.f5-heading {
+  position: absolute; top: 75px;
+  left: calc(var(--f5-off) + 30px);
+  width: 314px;
+}
+.f5-h-line1 {
+  font-family: var(--ntype-h); font-size: 30px;
+  color: #1a1d1c; letter-spacing: 0.03px;
+  line-height: 1.0107; margin: 0;
+}
+.f5-h-line2 {
+  font-family: var(--ntype-h); font-size: 30px;
+  color: #1a1d1c; letter-spacing: 0.03px;
+  line-height: 1.0107; margin: 0;
+}
+.f5-muted { color: #979797; }
+
+/* Nothing Agent card — Figma: x=25 y=209 w=311 h=425 */
+.f5-agent-card {
+  position: absolute; top: 209px;
+  left: calc(var(--f5-off) + 25px);
+  width: 311px; height: 425px;
+  cursor: pointer;
+}
+
+/* WORK pill tab at top of card */
+.f5-pill-tab {
+  position: absolute; top: 0;
+  left: 50%; transform: translateX(-50%);
+  width: 87px; height: 43px;
+  background: #D2D6DB; border-radius: 25px;
+  font-family: var(--ntype-h); font-size: 24px;
+  color: #000; text-align: center;
+  line-height: 43px; z-index: 2;
+}
+
+/* Grey card body */
+.f5-card-bg {
+  position: absolute; top: 55px; left: 0; right: 0; bottom: 0;
+  background: #D2D6DB; border-radius: 25px;
+}
+
+/* Image collage — top image (Apple FY22 statement) */
+.f5-img-top {
+  position: absolute; top: 82px; left: 56px;
+  width: 211px;
+  aspect-ratio: 2457 / 1379;
+  border-radius: 20px; object-fit: cover;
+  z-index: 1;
+}
+
+/* Left image (Trading 212 investments dark card) — crop to show stocks area */
+.f5-img-left {
+  position: absolute; top: 170px; left: 20px;
+  width: 158px; height: 177px;
+  border-radius: 20px; overflow: hidden;
+  z-index: 2;
+}
+.f5-img-left img {
+  position: absolute; left: 0;
+  width: 100%; height: auto;
+  top: -55%;
+}
+
+/* Right image (news / person) */
+.f5-img-right {
+  position: absolute;
+  top: 165px; left: 159px;
+  width: 132px; height: 109px;
+  border-radius: 20px; object-fit: cover;
+  z-index: 2;
+}
+
+/* CTA text — Figma: inset 84.94% top, 6.43% left */
+.f5-cta {
+  position: absolute; top: 361px; left: 20px;
+  width: 230px;
+  font-family: var(--ntype-r); font-size: 20px;
+  color: #000; line-height: 1.2;
+  letter-spacing: 0.02px; margin: 0;
+  z-index: 1;
+}
+
+/* Down button */
+.f5-down-btn {
+  position: absolute; top: 363px; right: 18px;
+  width: 43px; height: 43px;
+  object-fit: contain; z-index: 1;
+}
+
+/* ======= TRAVEL frame (83:720) — card images ======= */
+.f5t-pill { width: 103px; }
+
+/* Train timetable — Figma: left=20 top=133 w=219 h=146 r=30 */
+.f5t-img-train {
+  position: absolute; top: 133px; left: 20px;
+  width: 219px; height: 146px;
+  border-radius: 30px; overflow: hidden;
+  z-index: 1;
+}
+.f5t-img-train img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+/* Map person — Figma: left=141 top=76 w=129 h=150 r=30, cropped */
+.f5t-img-map {
+  position: absolute; top: 76px; left: 141px;
+  width: 129px; height: 150px;
+  border-radius: 30px; overflow: hidden;
+  z-index: 2;
+}
+.f5t-img-map img {
+  position: absolute; left: -2%; top: -43%;
+  width: 104%; height: 192%;
+  object-fit: cover;
+}
+
+/* Route map bottom — Figma: left=87 top=237 w=204 h=112, masked */
+.f5t-img-route {
+  position: absolute; top: 237px; left: 87px;
+  width: 204px; height: 112px;
+  overflow: hidden; z-index: 1;
+  mask-image: url('assets/travel-map-mask.svg');
+  -webkit-mask-image: url('assets/travel-map-mask.svg');
+  mask-size: 204px 105px;
+  -webkit-mask-size: 204px 105px;
+  mask-position: 0 4px;
+  -webkit-mask-position: 0 4px;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+}
+.f5t-img-route img {
+  position: absolute; left: 0; top: -119%;
+  width: 100%; height: 361%;
+  object-fit: cover;
+}
+
+/* TRAVEL app icon center — Maps + Citymapper inside oval */
+.f5t-center-icons {
+  position: relative;
+  display: flex; align-items: center;
+  padding-right: 14px;
+}
+.f5t-center-front {
+  position: relative; z-index: 1;
+  object-fit: cover;
+}
+.f5t-center-back {
+  position: relative; z-index: 0;
+  margin-left: -14px;
+  object-fit: cover;
+}
+
+/* TRAVEL app icon right — Chrome pair */
+.f5t-chrome-pair {
+  gap: 0;
+}
+.f5t-chrome-masked {
+  width: 30px; height: 30px;
+  border-radius: 50%; overflow: hidden;
+  position: relative; z-index: 1;
+  mask-image: url('assets/travel-chrome-mask.svg');
+  -webkit-mask-image: url('assets/travel-chrome-mask.svg');
+  mask-size: 36px 36px;
+  -webkit-mask-size: 36px 36px;
+  mask-position: 2px 2px;
+  -webkit-mask-position: 2px 2px;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+}
+.f5t-chrome-masked img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.f5t-chrome-icon {
+  position: relative; width: 28px; height: 28px;
+  margin-left: -10px; z-index: 0;
+}
+.f5t-cr-ring {
+  position: absolute; top: 0; left: 0;
+  width: 28px; height: 28px;
+}
+.f5t-cr-dot {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px; height: 14px;
+}
+
+/* App icons row — Figma: x=44 y=661 w=272 h=77, centered */
+/* App icon row — Figma: centered, gap=24, y≈661 */
+.f5-app-row {
+  position: absolute; bottom: 100px;
+  left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center;
+  justify-content: center; gap: 24px;
+}
+
+/* Overlapping icon pairs */
+.f5-app-pair {
+  position: relative;
+  display: flex; align-items: center;
+}
+.f5-app-icon {
+  display: block; object-fit: cover;
+  position: relative;
+}
+.f5-app-behind {
+  margin-left: -12px; z-index: 0;
+}
+
+/* Chrome center icon (grey oval with ring) */
+.f5-app-chrome {
+  position: relative;
+  width: 90px; height: 60px;
+  display: flex; align-items: center; justify-content: center;
+}
+.f5-chrome-outer {
+  width: 90px; height: 60px;
+  background: #D2D6DB; border-radius: 40px;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.f5-chrome-border {
+  position: absolute;
+  top: 3px; left: 4px;
+  width: 82px; height: 54px;
+  border: 1px solid #F5F5F5;
+  border-radius: 40px;
+}
+.f5-chrome-inner {
+  position: relative;
+  width: 42px; height: 42px;
+}
+.f5-chrome-ring {
+  position: absolute; top: 0; left: 0;
+  width: 42px; height: 42px;
+}
+.f5-chrome-dot {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 21px; height: 21px;
+}
+
+/* Keep old pill for Frame 6/7 backward compat */
+.pill {
+  display: inline-block;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 6px 18px;
+  font-family: var(--ntype-h);
+  font-size: 0.85rem;
+  font-weight: normal;
+  color: var(--text-1);
+  letter-spacing: 0.05em;
+  margin-bottom: 14px;
+}
+.card-agent {
+  cursor: pointer;
+  position: relative;
+  padding-bottom: 48px;
+  min-height: 200px;
+}
+.card-agent-cta {
+  font-family: var(--ntype-r);
+  font-size: 1rem;
+  font-weight: normal;
+  color: var(--text-1);
+  margin-bottom: 8px;
+}
+.card-agent-chevron {
+  position: absolute;
+  bottom: 16px; right: 16px;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--text-1);
+  color: #fff; border: none;
+  font-size: 1.2rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0; line-height: 1;
+}
+
+/* ======= FRAME 6 (77:203): WORKFLOW — exact Figma (360×834) ======= */
+.f6 { overflow: hidden; --f6-off: calc(50% - 180px); }
+
+/* WORK pill — Figma: x=136 y=56 w=87 h=43 */
+.f6-pill-tab {
+  position: absolute; top: 56px;
+  left: calc(var(--f6-off) + 136px);
+  width: 87px; height: 43px;
+  background: #D2D6DB; border-radius: 25px;
+  font-family: var(--ntype-h); font-size: 24px;
+  color: #000; text-align: center;
+  line-height: 43px; z-index: 2;
+}
+
+/* Connector strip between pill and card */
+.f6-connector {
+  position: absolute; top: 77px;
+  left: 50%; transform: translateX(-50%);
+  width: 28px; height: 34px;
+  background: #D2D6DB;
+}
+
+/* Grey card — Figma: x=25 y=111 w=311 h=528 */
+.f6-card {
+  position: absolute; top: 111px;
+  left: calc(var(--f6-off) + 25px);
+  width: 311px; height: 528px;
+  background: #D2D6DB; border-radius: 25px;
+}
+
+/* Title — Figma: x=45 y=127 → offset from card: left=20, top=16 */
+.f6-title {
+  position: absolute; top: 16px; left: 20px;
+  width: 230px;
+  font-family: var(--ntype-r); font-size: 20px;
+  color: #000; line-height: 1.2;
+  margin: 0;
+}
+
+/* Steps — positioned absolutely inside card */
+.f6-step {
+  position: absolute; left: 9px;
+  width: 276px;
+  font-family: var(--ntype-r); font-size: 20px;
+  color: #5b5b5b; line-height: 1.2;
+  margin: 0; padding: 0;
+}
+.f6-step li {
+  margin-left: 30px;
+  white-space: pre-wrap;
+}
+.f6-step li strong {
+  font-family: var(--ntype-h); font-weight: normal;
+  color: #000;
+}
+
+/* Red down arrows between steps */
+.f6-arrow {
+  position: absolute;
+  left: 50%; transform: translateX(-50%) rotate(90deg);
+  width: 15px; height: 15px;
+  z-index: 1;
+}
+
+/* Action icons row — Figma: y=582 from frame → 471 from card top */
+.f6-actions {
+  position: absolute; top: 471px;
+  left: 0; right: 0;
+  display: flex; align-items: center;
+  justify-content: center; gap: 85px;
+}
+.f6-act-icon {
+  display: block;
+  object-fit: contain;
+}
+
+/* ======= FRAME 7: TRAVEL ======= */
+.card-travel { position: relative; padding-bottom: 48px; }
+.travel-date { font-family: var(--ntype-r); font-size: 0.8rem; color: var(--text-3); margin-bottom: 10px; text-align: right; }
+.travel-routes { margin-bottom: 12px; }
+.travel-option {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--card-border);
+  font-family: var(--ntype-r);
+  font-size: 0.85rem;
+  color: var(--text-2);
+}
+.travel-option:last-of-type { border-bottom: none; }
+.travel-option .to-time { font-family: var(--ntype-h); font-weight: normal; color: var(--text-1); margin-right: 8px; }
+.travel-option p { margin: 4px 0 0; font-size: 0.78rem; }
+.to-price { font-size: 0.75rem; color: var(--text-3); }
+.price-green { color: #2E7D32; font-weight: 700; }
+.travel-option.highlight .to-price { color: var(--text-2); }
+.travel-map {
+  min-height: 60px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px 0;
+}
+.travel-map .map-route { background: #1976D2; color: #fff; padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; }
+.travel-footer { font-family: var(--ntype-r); font-size: 0.75rem; color: var(--text-3); margin-top: 8px; }
+.card-travel .card-agent-chevron { bottom: 12px; right: 12px; }
+
+/* ======= FRAME 8: HELP ======= */
+#frame-help { display: flex; flex-direction: column; }
+.help-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.help-text {
+  font-family: var(--ntype-h);
+  font-size: 1.5rem;
+  font-weight: normal;
+  color: var(--text-1);
+  text-align: center;
+}

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nothing AI OS — 8 Frames</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="stage">
+    <div class="phone">
+      <div class="phone-bezel">
+        <div class="phone-notch"></div>
+        <div class="phone-screen" id="phoneScreen">
+
+          <!-- ========== FRAME 1 (11:26): Lock ========== -->
+          <div id="frame-lock" class="frame active" data-frame="lock">
+            <div class="status-bar">
+              <span class="sb-time">12:30</span>
+              <div class="sb-icons">
+                <span class="sb-signal"></span>
+                <span class="sb-wifi"></span>
+                <span class="sb-battery"></span>
+              </div>
+            </div>
+            <div class="lock-date">THURSDAY, 19 FEB 2025</div>
+            <div class="lock-time-ndot">
+              <span class="ndot">08</span><span class="ndot-sep">:</span><span class="ndot">23</span>
+            </div>
+            <div class="lock-batteries">
+              <span><span class="lb-dot green"></span> ear (a) 82%</span>
+              <span><span class="lb-dot green"></span> phone 78%</span>
+            </div>
+            <div class="lock-dots">
+              <div class="lock-dots-grid"></div>
+              <div class="lock-dots-yellow"></div>
+            </div>
+            <button class="lock-tap" id="tapToWake" aria-label="Tap to wake">
+              <span class="lock-tap-dot"></span>
+              <span class="lock-tap-label">tap to wake</span>
+            </button>
+          </div>
+
+          <!-- ========== FRAME 2 (12:115): Good Morning Vaibhav ========== -->
+          <div id="frame-morning" class="frame" data-frame="morning">
+            <!-- Status Bar -->
+            <div class="f2-status">
+              <span class="f2-time">12:30</span>
+              <div class="f2-status-icons">
+                <img src="assets/sb-signal.svg" class="f2-sb-ico" alt="" width="18" height="12">
+                <img src="assets/sb-wifi.svg" class="f2-sb-ico" alt="" width="16" height="12">
+                <img src="assets/sb-battery.svg" class="f2-sb-ico" alt="" width="24" height="12">
+              </div>
+            </div>
+
+            <!-- Heading -->
+            <div class="f2-heading">
+              <p class="f2-h1">Good Morning, Vaibhav</p>
+              <p class="f2-h2"><span class="f2-muted">You have</span> 3 things <span class="f2-muted">to do before </span><span class="f2-dark">10 am</span></p>
+            </div>
+
+            <!-- Bento: Schedule Card (83:1351) — 158×233 -->
+            <div class="b-schedule">
+              <div class="b-schedule-bg"></div>
+              <p class="b-schedule-time">09:00</p>
+              <p class="b-schedule-label">Morning Run</p>
+              <img src="assets/image16.png" class="b-schedule-nhs" alt="" width="34" height="34">
+              <img src="assets/image19.png" class="b-schedule-health" alt="" width="46" height="46">
+            </div>
+
+            <!-- Bento: Breakfast Card (83:1361) — 158×220 -->
+            <div class="b-breakfast">
+              <div class="b-breakfast-bg"></div>
+              <div class="b-breakfast-title">Today's<br>Breakfast</div>
+              <div class="b-breakfast-list">
+                <ul><li>Nigella's Overnight Oats</li></ul>
+                <p class="b-breakfast-meta">108 Cl&nbsp;&nbsp;&nbsp;&nbsp;8.5g Fibre</p>
+              </div>
+              <div class="b-breakfast-btnbg"></div>
+              <p class="b-breakfast-btntext">Prepare w/ Nothing</p>
+            </div>
+
+            <!-- Work Commute Card (83:1335) — 322×220 -->
+            <div class="b-commute" data-goto="commute">
+              <div class="b-commute-bg"></div>
+              <p class="b-commute-title">Work Commute</p>
+
+              <!-- Map layers (masked) -->
+              <div class="b-commute-mask1">
+                <img src="assets/image28.png" class="b-commute-mapimg1" alt="">
+              </div>
+              <div class="b-commute-mask2">
+                <img src="assets/image30.png" class="b-commute-mapimg2" alt="">
+              </div>
+
+              <!-- Timeline -->
+              <div class="b-commute-tl">
+                <div class="b-tl-row">
+                  <span class="b-tl-dot"></span>
+                  <div class="b-tl-text">
+                    <span class="b-tl-time">11:39</span> <span class="b-tl-place">Brighton</span>
+                    <span class="b-tl-sub">On time&nbsp;&nbsp;<span class="b-tl-badge">Platform 6</span></span>
+                  </div>
+                </div>
+                <div class="b-tl-line"></div>
+                <span class="b-tl-hide">Hide stops</span>
+                <div class="b-tl-line"></div>
+                <div class="b-tl-row">
+                  <span class="b-tl-dot"></span>
+                  <div class="b-tl-text">
+                    <span class="b-tl-time">12:09</span> <span class="b-tl-place">Gatwick Airport</span>
+                    <span class="b-tl-sub">On time&nbsp;&nbsp;<span class="b-tl-badge">Platform 4</span></span>
+                  </div>
+                </div>
+                <div class="b-tl-line"></div>
+                <div class="b-tl-row">
+                  <span class="b-tl-dot b-tl-dot-big"></span>
+                  <div class="b-tl-text">
+                    <span class="b-tl-time b-tl-bold">12:39</span> <span class="b-tl-place b-tl-bold">London Victoria</span>
+                    <span class="b-tl-sub">On time&nbsp;&nbsp;<span class="b-tl-badge">Platform 13</span></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom row -->
+              <div class="b-commute-foot">
+                <div class="b-commute-apps">
+                  <img src="assets/image15.png" alt="" width="34" height="34">
+                  <img src="assets/rect1080.png" alt="" width="34" height="34">
+                  <img src="assets/image25.png" alt="" width="34" height="34">
+                  <img src="assets/image26.png" alt="" width="34" height="34">
+                </div>
+                <div class="b-commute-action">
+                  <span class="b-commute-actionlabel">4 App Action</span>
+                  <img src="assets/edit.png" alt="" width="35" height="35">
+                </div>
+              </div>
+            </div>
+
+            <!-- Nav Bar -->
+            <div class="f2-navbar">
+              <div class="f2-nav-left">
+                <img src="assets/nav-left.svg" alt="" class="f2-nav-circle" width="57" height="57">
+                <img src="assets/nav-left-icon.svg" alt="" class="f2-nav-inner-icon" width="23" height="23">
+              </div>
+              <div class="f2-nav-center" data-frame="agent-work">
+                <img src="assets/nav-center.svg" alt="" class="f2-nav-circle" width="55" height="55">
+                <img src="assets/nav-ring.svg" alt="" class="f2-nav-ring" width="35" height="35">
+                <img src="assets/nav-dot.svg" alt="" class="f2-nav-dot" width="31" height="31">
+              </div>
+              <div class="f2-nav-right" data-frame="help">
+                <img src="assets/nav-right.svg" alt="" class="f2-nav-circle" width="55" height="55">
+                <img src="assets/nav-right-icon.svg" alt="" class="f2-nav-inner-icon" width="22" height="22">
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ========== FRAME 3 (77:97): Work Commute detail ========== -->
+          <div id="frame-commute" class="frame f3" data-frame="commute">
+            <!-- Status Bar -->
+            <div class="f3-status">
+              <span class="f3-time">12:30</span>
+              <div class="f3-status-icons">
+                <img src="assets/sb-signal.svg" alt="" width="18" height="12">
+                <img src="assets/sb-wifi.svg" alt="" width="16" height="12">
+                <img src="assets/sb-battery.svg" alt="" width="24" height="12">
+              </div>
+            </div>
+
+            <!-- Main card bg -->
+            <div class="f3-card-main"></div>
+
+            <!-- Title + time -->
+            <p class="f3-title">Work Commute</p>
+            <p class="f3-time-range">9:30 - 10:30</p>
+
+            <!-- Progress bar -->
+            <div class="f3-progress-track">
+              <div class="f3-progress-fill"></div>
+            </div>
+
+            <!-- Action items 2×2 grid (within grey box margins) -->
+            <div class="f3-action f3-action-dot" style="top:185px"><img src="assets/dot-red-lg.svg" alt="" width="17" height="17"></div>
+            <p class="f3-action-text" style="top:185px">Book your Ticket</p>
+            <div class="f3-action f3-action-dot f3-action-col2" style="top:185px"><img src="assets/dot-red-lg2.svg" alt="" width="17" height="17"></div>
+            <p class="f3-action-text f3-action-col2" style="top:185px">Generate your Mix</p>
+
+            <div class="f3-action f3-action-dot" style="top:221px"><img src="assets/dot-red-lg.svg" alt="" width="17" height="17"></div>
+            <p class="f3-action-text" style="top:221px">Transfer to current</p>
+            <div class="f3-action f3-action-dot f3-action-col2" style="top:221px"><img src="assets/dot-red-lg2.svg" alt="" width="17" height="17"></div>
+            <p class="f3-action-text f3-action-col2" style="top:221px">Map live updates</p>
+
+            <!-- Progress dots -->
+            <div class="f3-dots">
+              <!-- Segment 1 (red filled) -->
+              <img src="assets/prog-red-big.svg" alt="" width="19" height="19" class="f3-dot-big">
+              <img src="assets/prog-red-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <img src="assets/prog-red-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <img src="assets/prog-red-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <img src="assets/prog-red-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <img src="assets/prog-red-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <!-- Segment 2 (grey) -->
+              <img src="assets/prog-grey-big.svg" alt="" width="19" height="19" class="f3-dot-big">
+              <img src="assets/prog-grey-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <img src="assets/prog-grey-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <img src="assets/prog-grey-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <img src="assets/prog-grey-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <img src="assets/prog-grey-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <!-- Segment 3 (grey) -->
+              <img src="assets/prog-grey-big.svg" alt="" width="19" height="19" class="f3-dot-big">
+              <img src="assets/prog-grey-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <img src="assets/prog-grey-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <img src="assets/prog-grey-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <img src="assets/prog-grey-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <img src="assets/prog-grey-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <!-- Segment 4 (grey) -->
+              <img src="assets/prog-grey-big.svg" alt="" width="19" height="19" class="f3-dot-big">
+              <img src="assets/prog-grey-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <img src="assets/prog-grey-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <img src="assets/prog-grey-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <img src="assets/prog-grey-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+              <img src="assets/prog-grey-sm.svg" alt="" width="11" height="11" class="f3-dot-sm">
+            </div>
+
+            <!-- Reminders card -->
+            <div class="f3-reminders-card">
+              <div class="f3-reminders-badge">Reminders</div>
+              <p class="f3-reminders-text">Leave for Victoria in 15 mins</p>
+            </div>
+
+            <!-- Stacked card shadows for taxi card -->
+            <div class="f3-taxi-shadow3"></div>
+            <div class="f3-taxi-shadow2"></div>
+            <div class="f3-taxi-shadow1"></div>
+
+            <!-- Taxi question -->
+            <p class="f3-taxi-text">Which taxi is cheapest to take?</p>
+
+            <!-- Taxi app icons (overlapping) -->
+            <div class="f3-taxi-apps">
+              <img src="assets/taxi-uber.png" alt="" class="f3-taxi-icon">
+              <img src="assets/taxi-bolt.png" alt="" class="f3-taxi-icon">
+              <img src="assets/taxi-voi.png" alt="" class="f3-taxi-icon">
+            </div>
+
+            <!-- Nav Bar -->
+            <div class="f2-navbar">
+              <div class="f2-nav-left" data-frame="morning">
+                <img src="assets/nav-left.svg" alt="" class="f2-nav-circle" width="57" height="57">
+                <img src="assets/nav-left-icon.svg" alt="" class="f2-nav-inner-icon" width="23" height="23">
+              </div>
+              <div class="f2-nav-center" data-frame="agent-work">
+                <img src="assets/nav-center.svg" alt="" class="f2-nav-circle" width="55" height="55">
+                <img src="assets/nav-ring.svg" alt="" class="f2-nav-ring" width="35" height="35">
+                <img src="assets/nav-dot.svg" alt="" class="f2-nav-dot" width="31" height="31">
+              </div>
+              <div class="f2-nav-right" data-frame="help">
+                <img src="assets/nav-right.svg" alt="" class="f2-nav-circle" width="55" height="55">
+                <img src="assets/nav-right-icon.svg" alt="" class="f2-nav-inner-icon" width="22" height="22">
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== FRAME 4 (12:204): After 10am tasks — Figma exact ========== -->
+          <div id="frame-tasks" class="frame f4" data-frame="tasks">
+            <div class="f2-status f4-status">
+              <span class="f2-time">12:30</span>
+              <div class="f2-status-icons">
+                <img src="assets/sb-signal.svg" class="f2-sb-ico" alt="" width="18" height="12">
+                <img src="assets/sb-wifi.svg" class="f2-sb-ico" alt="" width="16" height="12">
+                <img src="assets/sb-battery.svg" class="f2-sb-ico" alt="" width="24" height="12">
+              </div>
+            </div>
+            <div class="f4-scroll">
+              <h1 class="hero-title-sm">After 10 am,<br>you have <strong>12 tasks</strong>, and <strong>2</strong><br>are top priority</h1>
+              <div class="cluster">
+                <div class="cluster-label"><span class="tag-dot red"></span> Priority</div>
+
+                <!-- Task 1: Design Review (83:1080) — 312×145 -->
+                <div class="tl-card">
+                  <div class="tl-bg-bottom"></div>
+                  <div class="tl-bg-top"></div>
+                  <img src="assets/task-dot-red.svg" class="tl-dot" alt="" width="19" height="19">
+                  <p class="tl-name">Design Review</p>
+                  <p class="tl-time">11:20</p>
+                  <p class="tl-desc">final review of AI mockups before EOD</p>
+                  <div class="tl-btn-grey">
+                    <img src="assets/link-icon.png" class="tl-link-ico" alt="" width="18" height="19">
+                    <span class="tl-btn-grey-text">4 Files</span>
+                  </div>
+                  <div class="tl-btn-dark">
+                    <span class="tl-btn-dark-text">Generate Slides</span>
+                  </div>
+                </div>
+
+                <!-- Task 2: Team Standup (83:1063) — 312×145 -->
+                <div class="tl-card">
+                  <div class="tl-bg-bottom tl-bg-bottom-v2"></div>
+                  <div class="tl-bg-top"></div>
+                  <img src="assets/task-dot-red.svg" class="tl-dot" alt="" width="19" height="19">
+                  <p class="tl-name">Team Standup</p>
+                  <p class="tl-time">10:30</p>
+                  <p class="tl-desc">18 Person Meeting in Conf No. 5</p>
+                  <div class="tl-avatars">
+                    <img src="assets/avatar1.png" class="tl-av" alt="" width="37" height="37">
+                    <img src="assets/avatar2.png" class="tl-av" alt="" width="37" height="37">
+                    <img src="assets/avatar3.png" class="tl-av" alt="" width="37" height="37">
+                    <span class="tl-av-more">+7</span>
+                  </div>
+                  <div class="tl-btn-dark tl-btn-dark-v2">
+                    <span class="tl-btn-dark-text">Prepare Points</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="cluster">
+                <div class="cluster-label"><span class="tag-dot"></span> Social</div>
+                <!-- Messages card (simple) -->
+                <div class="tl-card tl-card-sm">
+                  <div class="tl-bg-top tl-bg-top-sm"></div>
+                  <img src="assets/task-dot-red.svg" class="tl-dot tl-dot-grey" alt="" width="19" height="19" style="filter:saturate(0) brightness(0.7)">
+                  <p class="tl-name">Messages</p>
+                  <p class="tl-desc" style="top:44px">3 unread from 2 family members</p>
+                </div>
+              </div>
+              <p class="ai-filter">AI screened 12 tasks, from calendar, notifs, <span class="cam">camera</span> <span class="review">review</span></p>
+            </div>
+            <div class="f2-navbar">
+              <div class="f2-nav-left" data-frame="morning">
+                <img src="assets/nav-left.svg" alt="" class="f2-nav-circle" width="57" height="57">
+                <img src="assets/nav-left-icon.svg" alt="" class="f2-nav-inner-icon" width="23" height="23">
+              </div>
+              <div class="f2-nav-center" data-frame="agent-work">
+                <img src="assets/nav-center.svg" alt="" class="f2-nav-circle" width="55" height="55">
+                <img src="assets/nav-ring.svg" alt="" class="f2-nav-ring" width="35" height="35">
+                <img src="assets/nav-dot.svg" alt="" class="f2-nav-dot" width="31" height="31">
+              </div>
+              <div class="f2-nav-right" data-frame="help">
+                <img src="assets/nav-right.svg" alt="" class="f2-nav-circle" width="55" height="55">
+                <img src="assets/nav-right-icon.svg" alt="" class="f2-nav-inner-icon" width="22" height="22">
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== FRAME 5 (72:5225): Nothing Agent WORK ========== -->
+          <div id="frame-agent-work" class="frame f5" data-frame="agent-work">
+            <!-- Status bar -->
+            <div class="f2-status f5-status">
+              <span class="f2-time">12:30</span>
+              <div class="f2-status-icons">
+                <img src="assets/sb-signal.svg" class="f2-sb-ico" alt="" width="18" height="12">
+                <img src="assets/sb-wifi.svg" class="f2-sb-ico" alt="" width="16" height="12">
+                <img src="assets/sb-battery.svg" class="f2-sb-ico" alt="" width="24" height="12">
+              </div>
+            </div>
+
+            <!-- Heading — x=30 y=75 w=314 -->
+            <div class="f5-heading">
+              <p class="f5-h-line1">Based on your activity,</p>
+              <p class="f5-h-line2"><span class="f5-muted">here's what your</span> Nothing Agent <span class="f5-muted">suggests</span></p>
+            </div>
+
+            <!-- Nothing Agent WORK card — x=25 y=209 w=311 h=425 -->
+            <div class="f5-agent-card" data-goto="workflow">
+              <div class="f5-pill-tab">WORK</div>
+              <div class="f5-card-bg"></div>
+              <img src="assets/agent-img23.png" class="f5-img-top" alt="">
+              <div class="f5-img-left">
+                <img src="assets/agent-img22.png" alt="">
+              </div>
+              <img src="assets/agent-img24.png" class="f5-img-right" alt="">
+              <p class="f5-cta">Protect downside during earnings volatility.</p>
+              <img src="assets/agent-down-btn.png" class="f5-down-btn" alt="" width="43" height="43">
+            </div>
+
+            <!-- App icons row — x=44 y=661 w=272 h=77 -->
+            <div class="f5-app-row">
+              <div class="f5-app-pair">
+                <img src="assets/app-citymapper.png" class="f5-app-icon" alt="" width="26" height="26" style="border-radius:30px;z-index:1">
+                <img src="assets/app-maps.png" class="f5-app-icon f5-app-behind" alt="" width="30" height="24">
+              </div>
+              <div class="f5-app-chrome">
+                <div class="f5-chrome-outer">
+                  <div class="f5-chrome-border"></div>
+                  <div class="f5-chrome-inner">
+                    <img src="assets/app-chrome-ring.svg" class="f5-chrome-ring" alt="" width="42" height="42">
+                    <img src="assets/app-chrome-dot.svg" class="f5-chrome-dot" alt="" width="21" height="21">
+                  </div>
+                </div>
+              </div>
+              <div class="f5-app-pair">
+                <img src="assets/app-strava.png" class="f5-app-icon" alt="" width="26" height="26" style="z-index:1">
+                <img src="assets/app-strava2.png" class="f5-app-icon f5-app-behind" alt="" width="26" height="26">
+              </div>
+            </div>
+
+            <!-- Nav bar — x=22 y=759 -->
+            <div class="f2-navbar">
+              <div class="f2-nav-left" data-frame="morning">
+                <img src="assets/nav-left.svg" alt="" class="f2-nav-circle" width="57" height="57">
+                <img src="assets/nav-left-icon.svg" alt="" class="f2-nav-inner-icon" width="23" height="23">
+              </div>
+              <div class="f2-nav-center" data-frame="agent-work">
+                <img src="assets/nav-center.svg" alt="" class="f2-nav-circle" width="55" height="55">
+                <img src="assets/nav-ring.svg" alt="" class="f2-nav-ring" width="35" height="35">
+                <img src="assets/nav-dot.svg" alt="" class="f2-nav-dot" width="31" height="31">
+              </div>
+              <div class="f2-nav-right" data-frame="help">
+                <img src="assets/nav-right.svg" alt="" class="f2-nav-circle" width="55" height="55">
+                <img src="assets/nav-right-icon.svg" alt="" class="f2-nav-inner-icon" width="22" height="22">
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== FRAME 6 (77:203): Protect downside workflow ========== -->
+          <div id="frame-workflow" class="frame f6" data-frame="workflow">
+            <!-- Status bar -->
+            <div class="f2-status f5-status">
+              <span class="f2-time">12:30</span>
+              <div class="f2-status-icons">
+                <img src="assets/sb-signal.svg" class="f2-sb-ico" alt="" width="18" height="12">
+                <img src="assets/sb-wifi.svg" class="f2-sb-ico" alt="" width="16" height="12">
+                <img src="assets/sb-battery.svg" class="f2-sb-ico" alt="" width="24" height="12">
+              </div>
+            </div>
+
+            <!-- WORK pill — Figma: x=136 y=56 w=87 h=43 -->
+            <div class="f6-pill-tab">WORK</div>
+            <!-- Connector strip — Figma: centered, y=77 h=34 -->
+            <div class="f6-connector"></div>
+
+            <!-- Grey card body — Figma: x=25 y=111 w=311 h=528 -->
+            <div class="f6-card">
+              <!-- Title -->
+              <p class="f6-title">Protect downside during earnings volatility.</p>
+
+              <!-- Step 1 -->
+              <ol class="f6-step" start="1" style="top:94px">
+                <li>The agent scans for earnings in <strong>Trading212</strong> each morning.</li>
+              </ol>
+              <img src="assets/wf-arrow.svg" class="f6-arrow" alt="" style="top:151px">
+
+              <!-- Step 2 -->
+              <ol class="f6-step" start="2" style="top:185px">
+                <li>Researches <strong>Chrome</strong> for articles, videos, options &amp; it prepares protection.</li>
+              </ol>
+              <img src="assets/wf-arrow.svg" class="f6-arrow" alt="" style="top:276px">
+
+              <!-- Step 3 -->
+              <ol class="f6-step" start="3" style="top:312px">
+                <li>"Risk window active" appears on your lock screen.</li>
+              </ol>
+              <img src="assets/wf-arrow.svg" class="f6-arrow" alt="" style="top:371px">
+
+              <!-- Step 4 -->
+              <ol class="f6-step" start="4" style="top:394px">
+                <li>You approve — it executes and auto-reverts.</li>
+              </ol>
+
+              <!-- Action icons — Figma: y=582 from frame top = 471 from card top -->
+              <div class="f6-actions">
+                <img src="assets/wf-edit.png" class="f6-act-icon" alt="Edit" width="34" height="34">
+                <img src="assets/wf-plus.png" class="f6-act-icon" alt="Add" width="31" height="31">
+                <img src="assets/wf-trash.png" class="f6-act-icon" alt="Delete" width="30" height="30">
+              </div>
+            </div>
+
+            <!-- App icons row (same as Frame 5) -->
+            <div class="f5-app-row">
+              <div class="f5-app-pair">
+                <img src="assets/app-citymapper.png" class="f5-app-icon" alt="" width="26" height="26" style="border-radius:30px;z-index:1">
+                <img src="assets/app-maps.png" class="f5-app-icon f5-app-behind" alt="" width="30" height="24">
+              </div>
+              <div class="f5-app-chrome">
+                <div class="f5-chrome-outer">
+                  <div class="f5-chrome-border"></div>
+                  <div class="f5-chrome-inner">
+                    <img src="assets/app-chrome-ring.svg" class="f5-chrome-ring" alt="" width="42" height="42">
+                    <img src="assets/app-chrome-dot.svg" class="f5-chrome-dot" alt="" width="21" height="21">
+                  </div>
+                </div>
+              </div>
+              <div class="f5-app-pair">
+                <img src="assets/app-strava.png" class="f5-app-icon" alt="" width="26" height="26" style="z-index:1">
+                <img src="assets/app-strava2.png" class="f5-app-icon f5-app-behind" alt="" width="26" height="26">
+              </div>
+            </div>
+
+            <!-- Nav bar -->
+            <div class="f2-navbar">
+              <div class="f2-nav-left" data-frame="morning">
+                <img src="assets/nav-left.svg" alt="" class="f2-nav-circle" width="57" height="57">
+                <img src="assets/nav-left-icon.svg" alt="" class="f2-nav-inner-icon" width="23" height="23">
+              </div>
+              <div class="f2-nav-center" data-frame="agent-work">
+                <img src="assets/nav-center.svg" alt="" class="f2-nav-circle" width="55" height="55">
+                <img src="assets/nav-ring.svg" alt="" class="f2-nav-ring" width="35" height="35">
+                <img src="assets/nav-dot.svg" alt="" class="f2-nav-dot" width="31" height="31">
+              </div>
+              <div class="f2-nav-right" data-frame="help">
+                <img src="assets/nav-right.svg" alt="" class="f2-nav-circle" width="55" height="55">
+                <img src="assets/nav-right-icon.svg" alt="" class="f2-nav-inner-icon" width="22" height="22">
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== FRAME 7 (83:720): Nothing Agent TRAVEL — exact Figma ========== -->
+          <div id="frame-agent-travel" class="frame f5 f5t" data-frame="agent-travel">
+            <!-- Status bar -->
+            <div class="f2-status f5-status">
+              <span class="f2-time">12:30</span>
+              <div class="f2-status-icons">
+                <img src="assets/sb-signal.svg" class="f2-sb-ico" alt="" width="18" height="12">
+                <img src="assets/sb-wifi.svg" class="f2-sb-ico" alt="" width="16" height="12">
+                <img src="assets/sb-battery.svg" class="f2-sb-ico" alt="" width="24" height="12">
+              </div>
+            </div>
+
+            <!-- Heading — same position as Frame 5 -->
+            <div class="f5-heading">
+              <p class="f5-h-line1">Based on your activity,</p>
+              <p class="f5-h-line2"><span class="f5-muted">here's what your</span> Nothing Agent <span class="f5-muted">suggests</span></p>
+            </div>
+
+            <!-- TRAVEL card — Figma: x=25 y=209 w=311 h=425 -->
+            <div class="f5-agent-card">
+              <div class="f5-pill-tab f5t-pill">TRAVEL</div>
+              <div class="f5-card-bg"></div>
+              <!-- Train timetable — Figma: left=20 top=133 w=219 h=146 r=30 -->
+              <div class="f5t-img-train">
+                <img src="assets/travel-img-train.png" alt="">
+              </div>
+              <!-- Map person — Figma: left=141 top=76 w=129 h=150 r=30 -->
+              <div class="f5t-img-map">
+                <img src="assets/travel-img-map.png" alt="">
+              </div>
+              <!-- Route map bottom — Figma: left=87 top=237 w=204 h=112 masked -->
+              <div class="f5t-img-route">
+                <img src="assets/travel-img-mapbottom.png" alt="">
+              </div>
+              <!-- CTA + down button -->
+              <p class="f5-cta">Adjusts routes based on live traffic, train &amp; disruptions</p>
+              <img src="assets/agent-down-btn.png" class="f5-down-btn" alt="" width="43" height="43">
+            </div>
+
+            <!-- App icons row — Figma 83:720 order: Strava left, Maps/Citymapper center, Chrome right -->
+            <div class="f5-app-row">
+              <!-- Left: Strava pair -->
+              <div class="f5-app-pair">
+                <img src="assets/travel-app-strava1.png" class="f5-app-icon" alt="" width="26" height="26" style="z-index:1">
+                <img src="assets/travel-app-strava2.png" class="f5-app-icon f5-app-behind" alt="" width="26" height="26">
+              </div>
+              <!-- Center: Maps + Citymapper in grey oval -->
+              <div class="f5-app-chrome">
+                <div class="f5-chrome-outer">
+                  <div class="f5-chrome-border"></div>
+                  <div class="f5t-center-icons">
+                    <img src="assets/travel-app-citymapper.png" class="f5t-center-front" alt="" width="39" height="39" style="border-radius:30px">
+                    <img src="assets/travel-app-maps.png" class="f5t-center-back" alt="" width="45" height="37">
+                  </div>
+                </div>
+              </div>
+              <!-- Right: Chrome pair -->
+              <div class="f5-app-pair f5t-chrome-pair">
+                <div class="f5t-chrome-masked">
+                  <img src="assets/travel-app-chrome-photo.png" alt="">
+                </div>
+                <div class="f5t-chrome-icon">
+                  <img src="assets/travel-chrome-ring.svg" class="f5t-cr-ring" alt="" width="28" height="28">
+                  <img src="assets/travel-chrome-dot.svg" class="f5t-cr-dot" alt="" width="14" height="14">
+                </div>
+              </div>
+            </div>
+
+            <!-- Nav bar -->
+            <div class="f2-navbar">
+              <div class="f2-nav-left" data-frame="morning">
+                <img src="assets/nav-left.svg" alt="" class="f2-nav-circle" width="57" height="57">
+                <img src="assets/nav-left-icon.svg" alt="" class="f2-nav-inner-icon" width="23" height="23">
+              </div>
+              <div class="f2-nav-center" data-frame="agent-work">
+                <img src="assets/nav-center.svg" alt="" class="f2-nav-circle" width="55" height="55">
+                <img src="assets/nav-ring.svg" alt="" class="f2-nav-ring" width="35" height="35">
+                <img src="assets/nav-dot.svg" alt="" class="f2-nav-dot" width="31" height="31">
+              </div>
+              <div class="f2-nav-right" data-frame="help">
+                <img src="assets/nav-right.svg" alt="" class="f2-nav-circle" width="55" height="55">
+                <img src="assets/nav-right-icon.svg" alt="" class="f2-nav-inner-icon" width="22" height="22">
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== FRAME 8 (72:5265): How else can I help? ========== -->
+          <div id="frame-help" class="frame" data-frame="help">
+            <div class="status-bar">
+              <span class="sb-time">12:30</span>
+              <div class="sb-icons"><span class="sb-signal"></span><span class="sb-wifi"></span><span class="sb-battery"></span></div>
+            </div>
+            <div class="help-center">
+              <p class="help-text">How else can I help?</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
